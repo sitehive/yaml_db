@@ -85,6 +85,9 @@ module YamlDb
         if column_names.nil?
           return
         end
+        
+        puts "[yaml_db] Loading: #{table.inspect}" if ENV['VERBOSE']
+        
         quoted_column_names = column_names.map { |column| ActiveRecord::Base.connection.quote_column_name(column) }.join(',')
         quoted_table_name = Utils.quote_table(table)
         records.each do |record|
