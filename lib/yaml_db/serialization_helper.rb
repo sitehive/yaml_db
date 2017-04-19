@@ -13,7 +13,7 @@ module YamlDb
       end
 
       def dump(filename)
-        disable_logger
+        disable_logger unless ENV['VERBOSE']
         File.open(filename, "w") do |file|
           @dumper.dump(file)
         end
@@ -33,7 +33,7 @@ module YamlDb
       end
 
       def load(filename, truncate = true)
-        disable_logger
+        disable_logger unless ENV['VERBOSE']
         @loader.load(File.new(filename, "r"), truncate)
         reenable_logger
       end
