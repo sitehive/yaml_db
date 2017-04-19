@@ -86,11 +86,12 @@ module YamlDb
           return
         end
         
-        puts "[yaml_db] Loading: #{table.inspect}" if ENV['VERBOSE']
+        puts "[yaml_db] Loading Table: #{table.inspect}" if ENV['VERBOSE']
         
         quoted_column_names = column_names.map { |column| ActiveRecord::Base.connection.quote_column_name(column) }.join(',')
         quoted_table_name = Utils.quote_table(table)
         records.each do |record|
+          puts "[yaml_db] Loading Record: #{table.inspect} - #{record.inspect}" if ENV['VERBOSE']
           quoted_values = record.map{|c| ActiveRecord::Base.connection.quote(c)}.join(',')
           ActiveRecord::Base.connection.execute("INSERT INTO #{quoted_table_name} (#{quoted_column_names}) VALUES (#{quoted_values})")
         end
